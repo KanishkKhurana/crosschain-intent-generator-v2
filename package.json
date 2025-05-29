@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@across-protocol/app-sdk": "^0.2.2",
     "@privy-io/react-auth": "^2.13.2",
     "@privy-io/wagmi": "^1.0.3",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -29,7 +30,8 @@
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
     "viem": "^2.30.0",
-    "wagmi": "^2.15.4"
+    "wagmi": "^2.15.4",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

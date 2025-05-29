@@ -2,6 +2,8 @@ import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
+import { Minus, MoveRight } from 'lucide-react'
+import Image from 'next/image'
 
 export default function IntentResultCard() {
     return (
@@ -12,11 +14,20 @@ export default function IntentResultCard() {
                     <CardDescription className='mb-5 w-4/5'>Congratulations! Your intent has been executed successfully. Here are the details of the intent execution.</CardDescription>
                     <hr className='border-[0.5px] mt-3' />
                 </CardHeader>
-                <CardContent className='grid grid-cols-3 gap-4'>
-                    <div className='col-span-1'>
-                        
-                    </div>
-                    <div className='col-span-1'>                        
+                <CardContent className='flex'>
+                    <div className='flex justify-around w-full'>
+                        <div className=''>
+                            <div className='w-20  h-20 bg-green-500 rounded-full rotate-x-15 -rotate-y-30'/>
+                        </div>
+                        <div className='flex justify-center gap-0 relative items-center w-full mx-5'>
+                            <div className='mb-10'>dv</div>
+                            <div className='mt-10'>dv</div>
+                            <div className='absolute w-full h-[1px] bg-white/20' />
+                            <div className='absolute w-4 h-4 border-t border-r border-white/20 rotate-45 right-0 top-1/2 -translate-y-1/2' />
+                        </div>
+                        <div className='relative'>
+                            <div className='w-20  h-20 bg-green-500 rounded-full rotate-x-15 -rotate-y-30'/>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

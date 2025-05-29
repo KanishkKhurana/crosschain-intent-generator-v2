@@ -2,9 +2,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import {useConnectWallet} from '@privy-io/react-auth';
-import WalletInputCard from "@/components/walletInputCard";
-import FeeDisplayCard from "@/components/feeDisplayCard";
-import IntentResultCard from "@/components/intentResultCard";
+import WalletInputCard from "@/components/WalletInputCard";
+import FeeDisplayCard from "@/components/FeeDisplayCard";
+import IntentResultCard from "@/components/IntentResultCard";
 
 // states emitted for all cards:
 // 1. activeness
