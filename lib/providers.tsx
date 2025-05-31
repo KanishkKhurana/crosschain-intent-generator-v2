@@ -9,15 +9,21 @@ import {WagmiProvider, createConfig} from '@privy-io/wagmi';
 import {privyConfig} from './privyConfig';
 import {config} from './wagmiConfig';
 
+import { AcrossProvider } from './across';
+
+
+
 const queryClient = new QueryClient();
 
 export default function Providers({children}: {children: React.ReactNode}) {
   return (
     <PrivyProvider appId="cmb0o0sa300pkjm0mtyvghw5b" config={privyConfig}>
       <QueryClientProvider client={queryClient}>
-        <WagmiProvider config={config}>
-          {children}
-        </WagmiProvider>
+        <AcrossProvider>
+          <WagmiProvider config={config}>
+            {children}
+          </WagmiProvider>
+        </AcrossProvider>
       </QueryClientProvider>
     </PrivyProvider>
   );

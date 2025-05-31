@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
   Card,
@@ -10,13 +11,30 @@ import {
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { contractConfig } from "@/lib/contractDetails"
+import { useIntentStore } from "@/lib/store"
+import { useAvailableRoutes } from "@/lib/hooks/useAvailableRoutes"
+import { useConnectWallet } from '@privy-io/react-auth';
+import { useWalletStore } from "@/lib/store/walletStore";
+import { useSuggestedFees } from "@/lib/hooks/useSuggestedFees";
 
-type walletInputCardProps = {
-  walletAddress: string | undefined;
-  connectWallet: () => void;
-}
 
-export default function WalletInputCard({ walletAddress, connectWallet }: walletInputCardProps) {
+
+export default function WalletInputCard() {
+  const { originChain, destinationChain, amount, inputToken, outputToken, setInputToken, setOutputToken } = useIntentStore();
+  const { walletAddress, setWalletAddress } = useWalletStore();
+  const { connectWallet } = useConnectWallet({
+    onSuccess: ({ wallet }) => {
+      console.log("wallet:", wallet);
+      setWalletAddress(wallet.address);
+    },
+  });
+  const { availableRoutes } = useAvailableRoutes({
+    originChainId: originChain,
+    destinationChainId: destinationChain
+  });
+  // const suggestedFees = useSuggestedFees();
+
   return (
     <div>
       <Card className="border hover:border-cardInactive transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem]">
@@ -47,42 +65,92 @@ export default function WalletInputCard({ walletAddress, connectWallet }: wallet
             <div className='flex flex-col gap-2'>
               <Label>Origin Chain</Label>
               <div className='pr-3 border rounded-md border-input hover:border-gray-600 focus-within:border-cardBorder transition-colors'>
-                <select className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
-                  <option value="" disabled selected>Select origin chain</option>
-                  <option value="ethereum">Ethereum</option>
-                  <option value="polygon">Polygon</option>
-                  <option value="arbitrum">Arbitrum</option>
-                  <option value="optimism">Optimism</option>
+                <select
+                  className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  value={useIntentStore().originChain || ""}
+                  onChange={(e) => {
+                    const value = e.target.value ? Number(e.target.value) : undefined;
+                    useIntentStore.getState().setOriginChain(value);
+                    // If destination chain matches new origin, clear it
+                    if (useIntentStore.getState().destinationChain === value) {
+                      useIntentStore.getState().setDestinationChain(undefined);
+                    }
+                    console.log("origin chain", useIntentStore.getState().originChain);
+                  }}
+                >
+                  <option value="" disabled>Select origin chain</option>
+                  {contractConfig.filter(chain => chain.chainId !== useIntentStore().destinationChain).map((chain) => (
+                    <option key={chain.chainId} value={chain.chainId}>
+                      {chain.name}
+                    </option>
+                  ))
+                  }
                 </select>
               </div>
             </div>
             <div className='flex flex-col gap-2'>
               <Label>Destination Chain</Label>
               <div className='pr-3 border rounded-md border-input hover:border-gray-600 focus-within:border-cardBorder transition-colors'>
-
-                <select className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
-                  <option value="" disabled selected>Select destination chain</option>
-                  <option value="ethereum">Ethereum</option>
-                  <option value="polygon">Polygon</option>
-                  <option value="arbitrum">Arbitrum</option>
-                  <option value="optimism">Optimism</option>
+                <select
+                  className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  value={useIntentStore((state) => state.destinationChain) || ""}
+                  onChange={(e) => {
+                    const value = e.target.value ? Number(e.target.value) : undefined;
+                    useIntentStore.getState().setDestinationChain(value);
+                    // If origin chain matches new destination, clear it
+                    if (useIntentStore.getState().originChain === value) {
+                      useIntentStore.getState().setOriginChain(undefined);
+                    }
+                    console.log("destination chain", useIntentStore.getState().destinationChain);
+                  }}
+                >
+                  <option value="" disabled>Select destination chain</option>
+                  {contractConfig.filter(chain => chain.chainId !== useIntentStore().originChain).map((chain) => (
+                    <option key={chain.chainId} value={chain.chainId}>
+                      {chain.name}
+                    </option>
+                  ))
+                  }
                 </select>
               </div>
             </div>
             <div className='flex flex-col gap-2'>
               <Label>Token</Label>
               <div className='pr-3 border rounded-md border-input hover:border-gray-600 focus-within:border-cardBorder transition-colors'>
-                <select className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
-                  <option value="" disabled selected>Select a token</option>
-                  <option value="eth">ETH</option>
-                  <option value="usdc">USDC</option>
-                  <option value="usdt">USDT</option>
+                <select
+                  className="flex h-10 w-full rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                  value={useIntentStore().inputToken || ""}
+                  onChange={(e) => {
+                    const value = e.target.value || undefined;
+                    useIntentStore.getState().setInputToken(value as `0x${string}`);
+                    // Find the selected route and set the output token
+                    const selectedRoute = availableRoutes?.find(route => route.inputToken === value);
+                    if (selectedRoute) {
+                      useIntentStore.getState().setOutputToken(selectedRoute.outputToken);
+                      if (selectedRoute.inputTokenSymbol) {
+                        useIntentStore.getState().setInputTokenSymbol(selectedRoute.inputTokenSymbol);
+                        console.log("input token symbol:", selectedRoute.inputTokenSymbol);
+                      }
+                    }
+                    console.log("input token:", value);
+                    console.log("output token:", selectedRoute?.outputToken);
+                  }}
+                >
+                  <option value="" disabled>Select a token</option>
+                  {availableRoutes?.map((route) => (
+                    <option key={route.inputToken} value={route.inputToken}>
+                      {route.inputTokenSymbol}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
             <div className='flex flex-col gap-2'>
               <Label>Amount</Label>
-              <Input type='number' className='rounded-md border-input hover:border-gray-600 focus:border-cardBorder focus-visible:ring-0 transition-colors' />
+              <Input type='number' className='rounded-md border-input hover:border-gray-600 focus:border-cardBorder focus-visible:ring-0 transition-colors' onChange={(e) => {
+                const value = e.target.value ? Number(e.target.value) : undefined;
+                useIntentStore.getState().setAmount(value);
+              }} value={useIntentStore().amount.toString()} />
             </div>
           </div>
         </CardContent>

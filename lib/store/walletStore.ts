@@ -1,11 +1,12 @@
 import { create } from 'zustand'
+import {useConnectWallet} from '@privy-io/react-auth';
 
 interface WalletState {
-  address: string | null
-  setAddress: (address: string | null) => void
+  walletAddress: string | null
+  setWalletAddress: (walletAddress: string | null) => void
 }
 
 export const useWalletStore = create<WalletState>((set) => ({
-  address: null,
-  setAddress: (address) => set({ address }),
+  walletAddress: null,
+  setWalletAddress: (walletAddress) => set({ walletAddress }),
 })) 

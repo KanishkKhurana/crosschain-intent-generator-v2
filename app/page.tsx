@@ -1,7 +1,3 @@
-"use client"
-import { useState } from "react";
-import Image from "next/image";
-import {useConnectWallet} from '@privy-io/react-auth';
 import WalletInputCard from "@/components/WalletInputCard";
 import FeeDisplayCard from "@/components/FeeDisplayCard";
 import IntentResultCard from "@/components/IntentResultCard";
@@ -13,20 +9,9 @@ import IntentResultCard from "@/components/IntentResultCard";
 // 4. 
 
 export default function Home() {
-  const [userWallet, setUserWallet] = useState<string | null>(null);
-  const {connectWallet} = useConnectWallet({
-    onSuccess: ({wallet}) => {
-        console.log(wallet);
-        setUserWallet(wallet.address);
-    },
-    onError: (error) => {
-        console.log(error);
-    },
-});
-
   return (
     <div className="flex flex-col items-center justify-center px-5">
-      <WalletInputCard walletAddress={userWallet} connectWallet={connectWallet} />
+      <WalletInputCard />
       <FeeDisplayCard />
       <IntentResultCard />
     </div>

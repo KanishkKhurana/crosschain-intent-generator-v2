@@ -1,14 +1,20 @@
-export const contractConfig = {
-    "base": {
+export const contractConfig = [
+    {
+        "name": "Base",
         "contractAddress": "0x514496264fa0B4Ee0522bC7Db644F78B02AEb1ae",
+        "chainId": 8453,
     },
-    "arbitrum": {
+    {
+        "name": "Arbitrum",
         "contractAddress": "0xDE5cFBDE966bF8a187a332EC9c5081A2c8a537c5",
+        "chainId": 42161,
     },
-    "optimism": {
+    {
+        "name": "Optimism",
         "contractAddress": "0x5cC9dde9Fdc4fE3A910006709bFa7A39155ef93f",
+        "chainId": 10,
     },
-}
+]
 
 export const abi = [
     {
