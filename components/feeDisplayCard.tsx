@@ -144,14 +144,26 @@ export default function FeeDisplayCard() {
                                         <div>
                                             {orderData && (
                                                 <>
-                                                    <div>
-                                                        <Label>Order Data: {orderData}</Label>
+                                                    <div className="mb-4">
+                                                        <Label>Order Data:</Label>
+                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                            <span className="break-all">{orderData}</span>
+                                                            <button onClick={() => navigator.clipboard.writeText(orderData)} className="ml-2 text-blue-500">Copy</button>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <Label>Fill Deadline: {fillDeadline}</Label>
+                                                    <div className="mb-4">
+                                                        <Label>Fill Deadline:</Label>
+                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                            <span className="break-all">{fillDeadline}</span>
+                                                            <button onClick={() => navigator.clipboard.writeText(fillDeadline.toString())} className="ml-2 text-blue-500">Copy</button>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <Label>Order Data Type: {orderDataType}</Label>
+                                                    <div className="mb-4">
+                                                        <Label>Order Data Type:</Label>
+                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                            <span className="break-all">{orderDataType}</span>
+                                                            <button onClick={() => navigator.clipboard.writeText(orderDataType)} className="ml-2 text-blue-500">Copy</button>
+                                                        </div>
                                                     </div>
                                                 </>
                                             )}
