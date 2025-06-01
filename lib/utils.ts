@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { pad } from "viem";
+import { contractConfig } from "./contractDetails";
+import { base, arbitrum, optimism } from "viem/chains";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -15,8 +17,32 @@ export function buildQueryKey<T extends object | undefined>(
 }
 
 export const padAddress = (address: `0x${string}`) => {
-  return pad(address, { size: 32 });
+  if (address) {
+    return pad(address, { size: 32 });
+  }
+  return undefined;
 };
+
+export const AcrossOriginSettlementContractOpenAbi = [
+  {
+      type: 'function',
+      name: 'open',
+      stateMutability: 'nonpayable',
+      inputs: [
+          {
+              components: [
+                { internalType: "uint32", name: "fillDeadline", type: "uint32" },
+                { internalType: "bytes32", name: "orderDataType", type: "bytes32" },
+                { internalType: "bytes", name: "orderData", type: "bytes" },
+              ],
+              internalType: "struct OnchainCrossChainOrder",
+              name: "order",
+              type: "tuple",
+            },
+      ],
+      outputs: [],
+  }
+];
 
 export const abiFragment = [
   {
@@ -37,9 +63,44 @@ export const abiFragment = [
 ];
 
 export const getTokenDecimals = (inputTokenSymbol?: string) => {
-  if(inputTokenSymbol === "USDC" || inputTokenSymbol === "USDT" || inputTokenSymbol === "USDC.e" || inputTokenSymbol === "USDT.e") {
+  // Return 6 for stablecoins, 18 for ETH/other tokens
+  if (
+    inputTokenSymbol === "USDC" ||
+    inputTokenSymbol === "USDT" ||
+    inputTokenSymbol === "USDC.e" ||
+    inputTokenSymbol === "USDT.e"
+  ) {
     return 6;
+  }
+  else if (inputTokenSymbol === "WBTC") {
+    return 8;
   }
   return 18;
 }
 
+
+export const getIntentContract = (originChainId: number) => {
+  for (const chain of contractConfig) {
+    if (chain.chainId === originChainId) {
+      return chain.contractAddress as `0x${string}`;
+    }
+  }
+  return null;
+}
+
+
+export const getChain = (chainId: number) => {
+  if (chainId === 8453) {
+    console.log("base", base);
+    return base;
+  }
+  if (chainId === 42161) {
+    console.log("arbitrum", arbitrum);
+    return arbitrum;
+  }
+  if (chainId === 10) {
+    console.log("optimism", optimism);
+    return optimism;
+  }
+  return base;
+}

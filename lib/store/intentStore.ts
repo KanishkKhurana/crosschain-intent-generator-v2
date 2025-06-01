@@ -1,24 +1,33 @@
 import { create } from 'zustand'
 import {GetSuggestedFeesReturnType} from '@across-protocol/app-sdk'
+import { AcrossClient, Route } from "@across-protocol/app-sdk";
+import { Address } from 'viem';
+
+export type useAvailableRoutesParams = Parameters<
+  AcrossClient["getAvailableRoutes"]
+>[0];
+
 
 interface IntentState {
-  originChain: number | undefined
-  destinationChain: number | undefined
-  inputToken: `0x${string}` | undefined
+  originChain: number
+  destinationChain: number
+  inputToken: Address 
   inputTokenSymbol: string | undefined
-  outputToken: `0x${string}` | undefined
-  amount: string | bigint
-  amountWithDecimals: bigint | undefined
+  outputToken: Address
+  amount: string | bigint 
+  amountWithDecimals: bigint
   outputAmount: bigint | undefined
   totalFees: bigint | undefined
   decimals: number | undefined
-  suggestedFees: GetSuggestedFeesReturnType | undefined
-  setOriginChain: (chain: number | undefined) => void
+  routes: Route[] | undefined
+  suggestedFees: GetSuggestedFeesReturnType | null
+  setOriginChain: (chain: number) => void
   setTotalFees: (fees: bigint | undefined) => void
-  setDestinationChain: (chain: number | undefined) => void
-  setInputToken: (token: `0x${string}` | undefined) => void
+  setRoutes: (routes: Route[] | undefined) => void
+  setDestinationChain: (chain: number) => void
+  setInputToken: (token: Address | undefined) => void
   setInputTokenSymbol: (symbol: string | undefined) => void
-  setOutputToken: (token: `0x${string}` | undefined) => void
+  setOutputToken: (token: Address | undefined) => void
   setOutputAmount: (amount: bigint | undefined) => void
   setAmount: (amount: number | undefined) => void
   setAmountWithDecimals: (amount: bigint | undefined) => void
@@ -28,14 +37,15 @@ interface IntentState {
 export const useIntentStore = create<IntentState>((set) => ({
   originChain: 8453,
   destinationChain: 10,
-  inputToken: undefined,
-  inputTokenSymbol: undefined,
-  outputToken: undefined,
-  amount: '10' ,
+  routes: undefined,
+  inputToken: "" as Address,
+  inputTokenSymbol: "USDC",
+  outputToken: "" as Address,
+  amount: "10",
   outputAmount: undefined,
   decimals: undefined,
-  amountWithDecimals: undefined,
-  suggestedFees: undefined,
+  amountWithDecimals: BigInt('1000000'),
+  suggestedFees: null,
   totalFees: undefined,
   setOriginChain: (chain) => set({ originChain: chain }),
   setTotalFees: (fees) => set({ totalFees: fees }),
@@ -47,4 +57,5 @@ export const useIntentStore = create<IntentState>((set) => ({
   setOutputToken: (token) => set({ outputToken: token }),
   setAmount: (amount) => set({ amount: amount?.toString() }),
   setSuggestedFees: (fees) => set({ suggestedFees: fees }),
+  setRoutes: (route) => set({ routes: route }),
 }))
