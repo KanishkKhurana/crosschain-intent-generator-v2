@@ -1,11 +1,15 @@
+'use client'
 import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Minus, MoveRight } from 'lucide-react'
 import Image from 'next/image'
-
+import { useDepositStatus } from '@/lib/hooks/useDepositStatus';
+import { useIntentStore } from '@/lib/store/intentStore';
 export default function IntentResultCard() {
+    const { depositTxHash } = useIntentStore();
+    const { depositStatus } = useDepositStatus(depositTxHash);
     return (
         <div>
             <Card className='border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem]'>
@@ -30,6 +34,9 @@ export default function IntentResultCard() {
                         </div>
                     </div>
                 </CardContent>
+                    <div>
+                        <Label>Deposit Status {depositStatus?.status}</Label>
+                    </div>
             </Card>
         </div>
     )

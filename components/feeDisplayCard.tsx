@@ -38,7 +38,7 @@ import { getChainId } from 'viem/actions'
 export default function FeeDisplayCard() {
 
     const { walletAddress } = useWalletStore();
-    const { originChain, destinationChain, inputToken, outputToken, amount, amountWithDecimals, inputTokenSymbol } = useIntentStore();
+    const { originChain, destinationChain, inputToken, outputToken, amount, amountWithDecimals, inputTokenSymbol, setDepositTxHash } = useIntentStore();
     const { orderData, fillDeadline, orderDataType, outputAmount, fees } = useIntentGeneration({
         originChain: originChain,
         destinationChain: destinationChain,
@@ -181,6 +181,7 @@ export default function FeeDisplayCard() {
                                 walletAddress: walletAddress,
                                 inputToken: inputToken,
                                 inputTokenSymbol: inputTokenSymbol,
+                                setDepositTxHash: setDepositTxHash,
                             })}>Execute Intent</Button>
                         </div>
                     </CardContent>

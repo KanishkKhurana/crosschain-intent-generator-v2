@@ -21,6 +21,7 @@ interface IntentState {
   decimals: number | undefined
   routes: Route[] | undefined
   suggestedFees: GetSuggestedFeesReturnType | null
+  depositTxHash: string | undefined
   setOriginChain: (chain: number) => void
   setTotalFees: (fees: bigint | undefined) => void
   setRoutes: (routes: Route[] | undefined) => void
@@ -32,6 +33,7 @@ interface IntentState {
   setAmount: (amount: number | undefined) => void
   setAmountWithDecimals: (amount: bigint | undefined) => void
   setSuggestedFees: (fees: GetSuggestedFeesReturnType | undefined) => void
+  setDepositTxHash: (hash: string | undefined) => void
 }
 
 export const useIntentStore = create<IntentState>((set) => ({
@@ -47,6 +49,7 @@ export const useIntentStore = create<IntentState>((set) => ({
   amountWithDecimals: BigInt('1000000'),
   suggestedFees: null,
   totalFees: undefined,
+  depositTxHash: undefined,
   setOriginChain: (chain) => set({ originChain: chain }),
   setTotalFees: (fees) => set({ totalFees: fees }),
   setAmountWithDecimals: (amount) => set({ amountWithDecimals: amount }),
@@ -58,4 +61,5 @@ export const useIntentStore = create<IntentState>((set) => ({
   setAmount: (amount) => set({ amount: amount?.toString() }),
   setSuggestedFees: (fees) => set({ suggestedFees: fees }),
   setRoutes: (route) => set({ routes: route }),
+  setDepositTxHash: (hash) => set({ depositTxHash: hash }),
 }))

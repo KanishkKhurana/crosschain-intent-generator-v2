@@ -156,7 +156,7 @@ export default function WalletInputCard() {
         <CardFooter>
           <div className='w-full'>
             <Button className='w-full' onClick={connectWallet}>
-              {walletAddress ? walletAddress : "Connect Wallet and Build Intent"}
+              {walletAddress ? walletAddress : "Connect Wallet to Build Intent"}
             </Button>
           </div>
         </CardFooter>
