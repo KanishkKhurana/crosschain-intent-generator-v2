@@ -1,6 +1,7 @@
 import WalletInputCard from "@/components/WalletInputCard";
 import FeeDisplayCard from "@/components/FeeDisplayCard";
 import IntentResultCard from "@/components/IntentResultCard";
+import Image from "next/image";
 
 // states emitted for all cards:
 // 1. activeness
@@ -15,7 +16,7 @@ export default function Home() {
         Crosschain Intent Generator
 
         <div className=' '>
-          <a href="http://across.to" target="_blank" rel="noopener noreferrer"> <div className='flex hover:scale-105 duration-300 transition-all justify-center gap-1 text-[0.75rem] items-center'> Built by <img src="/across.svg" alt="Across is Unifying Ethereum" className='w-12' />  </div></a>
+          <a href="http://across.to" target="_blank" rel="noopener noreferrer"> <div className='flex hover:scale-105 duration-300 transition-all justify-center gap-1 text-[0.75rem] items-center'> Built by <Image src="/across.svg" alt="Across is Unifying Ethereum" className='w-14' width={100} height={100} />  </div></a>
         </div>
       </h1>
       <WalletInputCard />

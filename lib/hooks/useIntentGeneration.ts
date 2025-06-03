@@ -1,8 +1,6 @@
 import { Address, encodeAbiParameters } from 'viem';
-import { abiFragment, padAddress, getIntentContract } from '../utils';
-import { useIntentStore, useWalletStore } from '../store';
+import { abiFragment, padAddress } from '../utils';
 import { useSuggestedFees } from './useSuggestedFees';
-import { useEffect } from 'react';
 
 
 export const useIntentGeneration = ({

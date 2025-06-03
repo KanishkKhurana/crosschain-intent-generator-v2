@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   Card,
   CardContent,
@@ -17,14 +17,12 @@ import { useConnectWallet } from '@privy-io/react-auth';
 import { useWalletStore } from "@/lib/store/walletStore";
 import { Address } from 'viem'
 import { useAvailableRoutes } from "@/lib/hooks/useAvailableRoutes"
-import { useSuggestedFees } from '@/lib/hooks/useSuggestedFees'
-import { useIntentGeneration } from '@/lib/hooks/useIntentGeneration'
 import { useStepStore } from '@/lib/store/stepStore'
 
 
 
 export default function WalletInputCard() {
-  const { routes, originChain, destinationChain, amount, inputToken, outputToken, setInputToken, setOutputToken, inputTokenSymbol, setInputTokenSymbol } = useIntentStore();
+  const { originChain, destinationChain } = useIntentStore();
   const { walletAddress, setWalletAddress } = useWalletStore();
   const { connectWallet } = useConnectWallet({
     onSuccess: ({ wallet }) => {
@@ -61,7 +59,7 @@ export default function WalletInputCard() {
         <div className={`w-full h-full flex flex-col border-l  absolute top-0 left-1/2 z-0 ${useStepStore().step >= 2 ? 'border-[#6cf9d8]' : 'border-gray-500'} transition-all duration-300`}>
         </div>
       </div>
-      <Card className=" bg-[#34353a] transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 basis-11/12 shadow-mb">
+      <Card className=" bg-[#34353a] transition-all duration-300 sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 basis-11/12 shadow-mb">
         <CardHeader>
           <CardTitle className='text-3xl '>Configure Intent Parameters</CardTitle>
           <CardDescription className='mb-5 w-4/5'>Define the origin and destination chain, amount and connect your wallet to initiate a crosschain intent</CardDescription>
@@ -91,10 +89,10 @@ export default function WalletInputCard() {
                   }}
                 >
                   <option value="" disabled>Select origin chain</option>
-                  {contractConfig.filter(chain => chain.chainId !== useIntentStore().destinationChain).map((chain) => (
+                  {contractConfig.filter(chain => chain.chainId !== destinationChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
                       <div className='flex items-center gap-2'>
-                        {chain.name}
+                         {chain.name}
                       </div>
                     </option>
                   ))
@@ -116,7 +114,7 @@ export default function WalletInputCard() {
                   }}
                 >
                   <option value="" disabled>Select destination chain</option>
-                  {contractConfig.filter(chain => chain.chainId !== useIntentStore().originChain).map((chain) => (
+                  {contractConfig.filter(chain => chain.chainId !== originChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
                       <div className='flex items-center gap-2'>
                         {chain.name}
@@ -137,7 +135,7 @@ export default function WalletInputCard() {
                     const value = e.target.value || undefined;
                     useIntentStore.getState().setInputToken(value as Address);
                     // Find the selected route and set the output token and symbol
-                    const selectedRoute = routes?.find(route => route.inputToken === value);
+                    const selectedRoute = availableRoutes?.find(route => route.inputToken === value);
                     if (selectedRoute) {
                       useIntentStore.getState().setOutputToken(selectedRoute.outputToken);
                       // Always set the symbol, fallback to 'USDC' if missing
@@ -150,8 +148,8 @@ export default function WalletInputCard() {
                   }}
                 >
                   <option value="" disabled>Select a token</option>
-                  {routes?.map((route) => (
-                    <option value={route.inputToken}>
+                  {availableRoutes?.map((route) => (
+                    <option value={route.inputToken} key={route.outputToken}>
                       {route.inputTokenSymbol}
                     </option>
                   ))}

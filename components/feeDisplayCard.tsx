@@ -1,7 +1,6 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { createWalletClient, http, custom, formatUnits } from 'viem'
-import { base } from 'viem/chains'
+import React from 'react'
+import { formatUnits } from 'viem'
 import {
     Card,
     CardContent,
@@ -18,21 +17,12 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { CopyIcon } from 'lucide-react'
-
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from "@/components/ui/accordion"
 import { Button } from './ui/button'
 import { useIntentGeneration } from '@/lib/hooks/useIntentGeneration'
 import { useWalletStore } from '@/lib/store/walletStore'
 import { executeTransaction } from '@/lib/services/transaction-service'
 import { useIntentStore } from '@/lib/store'
-import { useWriteContract } from 'wagmi'
-import { AcrossOriginSettlementContractOpenAbi, getChain, getIntentContract, getTokenDecimals } from '@/lib/utils'
-import { getChainId } from 'viem/actions'
+import { getTokenDecimals } from '@/lib/utils'
 import { useStepStore } from '@/lib/store/stepStore'
 
 
@@ -155,9 +145,9 @@ export default function FeeDisplayCard() {
                                 fillDeadline: fillDeadline,
                                 orderDataType: orderDataType,
                                 originChain: originChain,
-                                walletAddress: walletAddress,
+                                walletAddress: walletAddress!,
                                 inputToken: inputToken,
-                                inputTokenSymbol: inputTokenSymbol,
+                                inputTokenSymbol: inputTokenSymbol!,
                                 setDepositTxHash: setDepositTxHash,
                             })}>Execute Intent</Button>
                         </div>

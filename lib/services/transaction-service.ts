@@ -1,16 +1,20 @@
 import { createWalletClient, http, createPublicClient, custom } from "viem";
-import {
-  AcrossOriginSettlementContractOpenAbi,
-  getChain,
-  getIntentContract,
-} from "../utils";
-import { mainnet, base, optimism, arbitrum } from "viem/chains";
-import { useWalletStore } from "../store/walletStore";
-import { useWriteContract } from "wagmi";
+import { AcrossOriginSettlementContractOpenAbi, getChain, getIntentContract } from "../utils";
 import { useIntentStore } from "../store/intentStore";
 import { useStepStore } from "../store/stepStore";
 
-export const executeTransaction = async (transaction: any) => {
+type Transaction = {  
+  walletAddress: `0x${string}`;
+  originChain: number;
+  orderData: any;
+  fillDeadline: number;
+  orderDataType: string;
+  inputToken: `0x${string}`;
+  inputTokenSymbol: string;
+  setDepositTxHash: (tx: `0x${string}`) => void;
+}
+
+export const executeTransaction = async (transaction: Transaction) => {
   const { originChain } = transaction;
 
   // 1. Create a viem client
@@ -24,9 +28,9 @@ export const executeTransaction = async (transaction: any) => {
 
   // Create wallet client for sending transactions
   const walletClient = createWalletClient({
-    account: transaction.walletAddress as `0x${string}`,
+    account: transaction.walletAddress,
     chain: getChain(originChain),
-    transport: custom(window.ethereum!!),
+    transport: custom(window.ethereum!),
   });
 
   console.log("here:", originChain);
@@ -40,7 +44,7 @@ export const executeTransaction = async (transaction: any) => {
   // Simulate the contract call first
   try {
     const simulationResult = await publicClient.simulateContract({
-      account: transaction.walletAddress as `0x${string}`,
+      account: transaction.walletAddress,
       address: intentContract as `0x${string}`,
       abi: AcrossOriginSettlementContractOpenAbi,
       functionName: "open",
@@ -52,6 +56,7 @@ export const executeTransaction = async (transaction: any) => {
         },
       ],
     });
+        
   } catch (error: any) {
     // Check if error is due to insufficient allowance
     if (error.message.includes("transfer amount exceeds allowance")) {
@@ -93,7 +98,7 @@ export const executeTransaction = async (transaction: any) => {
     }
   }
   const request = await publicClient.simulateContract({
-    account: transaction.walletAddress as `0x${string}`,
+    account: transaction.walletAddress,
     address: intentContract as `0x${string}`,
     abi: AcrossOriginSettlementContractOpenAbi,
     functionName: "open",

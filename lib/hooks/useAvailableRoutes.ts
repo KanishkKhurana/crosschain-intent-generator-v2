@@ -36,9 +36,7 @@ export const useAvailableRoutes = (
       setOutputToken(availableRoutes[0].outputToken);
       setInputTokenSymbol(availableRoutes[0].inputTokenSymbol);
     }
-  }, [availableRoutes, setRoutes, params.originChainId, params.destinationChainId]);
-
-  console.log("availableRoutes:", availableRoutes);
+  }, [availableRoutes, setRoutes, params.originChainId, params.destinationChainId, setInputToken, setOutputToken, setInputTokenSymbol]);
 
   return { availableRoutes };
 }

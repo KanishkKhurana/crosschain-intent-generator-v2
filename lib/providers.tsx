@@ -4,7 +4,7 @@ import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 import {PrivyProvider} from '@privy-io/react-auth';
 // Make sure to import these from `@privy-io/wagmi`, not `wagmi`
-import {WagmiProvider, createConfig} from '@privy-io/wagmi';
+import {WagmiProvider} from '@privy-io/wagmi';
 
 import {privyConfig} from './privyConfig';
 import {config} from './wagmiConfig';

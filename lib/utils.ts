@@ -79,7 +79,7 @@ export const getTokenDecimals = (inputTokenSymbol?: string) => {
 }
 
 
-export const getIntentContract = (originChainId: number) => {
+export const getIntentContract = (originChainId: Number) => {
   for (const chain of contractConfig) {
     if (chain.chainId === originChainId) {
       return chain.contractAddress as `0x${string}`;
@@ -89,7 +89,7 @@ export const getIntentContract = (originChainId: number) => {
 }
 
 
-export const getChain = (chainId: number) => {
+export const getChain = (chainId: Number) => {
   if (chainId === 8453) {
     console.log("base", base);
     return base;
@@ -103,19 +103,16 @@ export const getChain = (chainId: number) => {
     return optimism;
   }
   return base;
-}
+} 
 
-export const getChainLogo = (chainId: number) => {
+export const getChainLogo = (chainId: Number) => {
   if (chainId === 8453) {
-    console.log("logo is base", contractConfig[0].logo);
     return String(contractConfig[0].logo);
   }
   if (chainId === 42161) {
-    console.log("logo is arbitrum", contractConfig[1].logo);
     return String(contractConfig[1].logo);
   }
   if (chainId === 10) {
-    console.log("logo is optimism", contractConfig[2].logo);
     return String(contractConfig[2].logo);
   }
 }

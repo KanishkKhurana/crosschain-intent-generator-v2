@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import {useConnectWallet} from '@privy-io/react-auth';
 
 interface WalletState {
   walletAddress: `0x${string}` | null

@@ -1,9 +1,7 @@
 'use client'
 import React from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
-import { Label } from './ui/label'
-import { Input } from './ui/input'
-import { Loader2, Minus, MoveRight } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useDepositStatus } from '@/lib/hooks/useDepositStatus';
@@ -11,7 +9,7 @@ import { useIntentStore } from '@/lib/store/intentStore';
 import { useStepStore } from '@/lib/store/stepStore'
 import { CheckCircle2 } from 'lucide-react'
 export default function IntentResultCard() {
-    const { depositTxHash, fillTime, inputTokenSymbol, loading } = useIntentStore();
+    const { depositTxHash, fillTime, inputTokenSymbol, loading, amount } = useIntentStore();
     const { depositStatus, originChainImage, destinationChainImage, originChainScan, destinationChainScan } = useDepositStatus(depositTxHash);
     return (
         <div className='flex h-full gap-2'>
@@ -52,7 +50,7 @@ export default function IntentResultCard() {
                             <div className='flex flex-col gap-2'>
 
                             <div className=' left-0'>Intent filled in {fillTime} Seconds 🎉</div>
-                            <div className='right-0'>{inputTokenSymbol} {depositStatus?.outputAmount}</div>
+                            <div className='right-0'>{amount} {inputTokenSymbol}</div>
                             </div>
                             <div className='absolute w-full h-[1px] bg-white/20' />
                             <div className='absolute w-4 h-4 border-t border-r border-white/20 rotate-45 right-0 top-1/2 -translate-y-1/2' />

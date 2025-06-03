@@ -4,7 +4,6 @@ import { getChainLogo, getChainScan } from "../utils";
 import { useIntentStore } from "../store/intentStore";
 
 export const useDepositStatus = (depositTxHash: string | undefined) => {
-    const { step } = useStepStore();
 
 
     const { data: depositStatus, isError, isSuccess, refetch } = useQuery({
@@ -31,9 +30,7 @@ export const useDepositStatus = (depositTxHash: string | undefined) => {
         retry: 10,
         retryDelay: 1000,
         refetchIntervalInBackground: true,
-    });
-
-    // console.log("depositStatus", depositStatus);
+    });// console.log("depositStatus", depositStatus);
 
 
     const originChainImage = getChainLogo(depositStatus?.originChainId);
