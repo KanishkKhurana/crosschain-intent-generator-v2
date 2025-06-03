@@ -25,13 +25,16 @@ export default function IntentResultCard() {
                 </div>
 
             </div>
-            <Card className='border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12'>
+            <Card className='bg-[#34353a] transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 shadow-mb'>
                 <CardHeader>
                     <CardTitle className='text-3xl '>Intent Execution Result</CardTitle>
                     <CardDescription className='mb-5 w-4/5'>Congratulations! Your intent has been executed successfully. Here are the details of the intent execution.</CardDescription>
                     <hr className='border-[0.5px] mt-3' />
                 </CardHeader>
+                {depositStatus?.status === "filled" && (
+                    <>
                 <CardContent className='flex'>
+                    
                     <div className='flex justify-around w-full'>
                         <div className=''>
                             <div className='w-20  h-20 bg-green-500 rounded-full rotate-x-15 -rotate-y-30' />
@@ -53,6 +56,8 @@ export default function IntentResultCard() {
                     <Label>Deposit Tx Hash {depositStatus?.depositTxHash}</Label>
                     <Label>Fill Tx {depositStatus?.fillTx}</Label>
                 </div>
+                    </>
+                )}
             </Card>
         </div>
     )

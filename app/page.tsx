@@ -10,15 +10,14 @@ import IntentResultCard from "@/components/IntentResultCard";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center px-5">
-      <div className="text-4xl font-semibold mb-10">
+    <div className="flex flex-col items-center justify-center px-5 bg-[#2d2e32]">
+      <h1 className="text-4xl font-semibold text-white my-6 text-center">
         Crosschain Intent Generator
-        <div className="text-sm text-gray-500">
-          <p>
-            This is a crosschain intent generator that allows you to generate intents for crosschain transactions.
-          </p>
+
+        <div className=' '>
+          <a href="http://across.to" target="_blank" rel="noopener noreferrer"> <div className='flex hover:scale-105 duration-300 transition-all justify-center gap-1 text-[0.75rem] items-center'> Built by <img src="/across.svg" alt="Across is Unifying Ethereum" className='w-12' />  </div></a>
         </div>
-      </div>
+      </h1>
       <WalletInputCard />
       <FeeDisplayCard />
       <IntentResultCard />

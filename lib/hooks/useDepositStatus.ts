@@ -12,13 +12,13 @@ export const useDepositStatus = (depositTxHash: string | undefined) => {
                 return undefined;
             }
             const response = await fetch(`https://app.across.to/api/deposit/status?depositTxHash=${depositTxHash}`);
-            
-            // If we get a 200, return the data and stop polling
+            // If we get a 200, parse the response and check if deposit is filled
             if (response.status === 200) {
                 const data = await response.json();
-                return data;
+                if (data.status === "filled") {
+                    return data;
+                }
             }
-            
             // If not 200, throw error to trigger retry
             throw new Error(`Status ${response.status}`);
         },

@@ -17,6 +17,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { CopyIcon } from 'lucide-react'
 
 import {
     Accordion,
@@ -60,7 +61,7 @@ export default function FeeDisplayCard() {
         </div>
       </div>
 
-        <Card className="border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12">
+        <Card className="bg-[#34353a] transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 shadow-mb">
             <CardHeader>
                 <CardTitle className='text-3xl'>Intent Details</CardTitle>
                 <CardDescription className='mb-5 w-4/5'>
@@ -104,46 +105,52 @@ export default function FeeDisplayCard() {
                                 </div>
                             </div>
                         </div>
-                        <div className='p-3 rounded-md bg-muted no-underline'>
-                            <Accordion type="single" collapsible>
-                                <AccordionItem value="item-1" className='no-underline'>
-                                    <AccordionTrigger className='no-underline'>
-                                        <Label className='no-underline'>Intent Breakdown</Label>
-                                    </AccordionTrigger>
-                                    <AccordionContent>
+                        <div className='p-3 rounded-md bg-[#2d2f32] no-underline'>
+                            <div className='border-none border-[#2d2f32]'>
+                                <div className='no-underline'>
+                                    <div className='no-underline'>
+                                        <Label className='no-underline text-lg'>Intent Breakdown</Label>
+                                    </div>
+                                    <div className='border-none border-[#2d2f32]'>
                                         <div>
                                             {orderData && (
                                                 <>
                                                     <div className="mb-4">
-                                                        <Label>Order Data:</Label>
-                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                        <Label>Order Data</Label>
+                                                        <div className="bg-[#34353a] text-white p-2 rounded-md flex justify-between items-start">
                                                             <span className="break-all">{orderData}</span>
-                                                            <button onClick={() => navigator.clipboard.writeText(orderData)} className="ml-2 text-blue-500">Copy</button>
+                                                            <button onClick={() => navigator.clipboard.writeText(orderData)} className="ml-2 text-[#6cf9d8]  hover:scale-105 transition-all duration-300">
+                                                                <CopyIcon className='w-4 h-4' />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="mb-4">
-                                                        <Label>Fill Deadline:</Label>
-                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                        <Label>Fill Deadline</Label>
+                                                        <div className="bg-[#34353a] text-white p-2 rounded-md flex justify-between items-start">
                                                             <span className="break-all">{fillDeadline}</span>
-                                                            <button onClick={() => navigator.clipboard.writeText(fillDeadline.toString())} className="ml-2 text-blue-500">Copy</button>
+                                                            <button onClick={() => navigator.clipboard.writeText(fillDeadline.toString())} className="ml-2 text-[#6cf9d8]  hover:scale-105 transition-all duration-300">
+                                                                <CopyIcon className='w-4 h-4' />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="mb-4">
-                                                        <Label>Order Data Type:</Label>
-                                                        <div className="bg-gray-800 text-white p-2 rounded-md flex justify-between items-center">
+                                                    <Label>Order Data Type</Label>
+                                                        <div className="bg-[#34353a] text-white p-2 rounded-md flex justify-between items-start">
                                                             <span className="break-all">{orderDataType}</span>
-                                                            <button onClick={() => navigator.clipboard.writeText(orderDataType)} className="ml-2 text-blue-500">Copy</button>
+                                                            <button onClick={() => navigator.clipboard.writeText(orderDataType)} className="ml-2 text-[#6cf9d8]  hover:scale-105 transition-all duration-300">
+                                                                <CopyIcon className='w-4 h-4' />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </>
                                             )}
                                         </div>
-                                    </AccordionContent>
-                                </AccordionItem>
-                            </Accordion>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <Button className="w-full bg-white text-black hover:bg-gray-100" onClick={() => executeTransaction({
+                            <Button className="w-full bg-[#6cf9d8] text-black hover:scale-105 transition-all duration-300 hover:bg-[#6cf9d8]" onClick={() => executeTransaction({
                                 orderData: orderData,
                                 fillDeadline: fillDeadline,
                                 orderDataType: orderDataType,
