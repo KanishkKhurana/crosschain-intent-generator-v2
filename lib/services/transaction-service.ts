@@ -122,6 +122,7 @@ export const executeTransaction = async (transaction: any) => {
   console.log("tx:", tx);
   transaction.setDepositTxHash(tx);
   useStepStore.getState().setStep(3);
+  useIntentStore.getState().setLoading(true);
 
   // Update the depositTxHash state
 };

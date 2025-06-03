@@ -104,3 +104,33 @@ export const getChain = (chainId: number) => {
   }
   return base;
 }
+
+export const getChainLogo = (chainId: number) => {
+  if (chainId === 8453) {
+    console.log("logo is base", contractConfig[0].logo);
+    return String(contractConfig[0].logo);
+  }
+  if (chainId === 42161) {
+    console.log("logo is arbitrum", contractConfig[1].logo);
+    return String(contractConfig[1].logo);
+  }
+  if (chainId === 10) {
+    console.log("logo is optimism", contractConfig[2].logo);
+    return String(contractConfig[2].logo);
+  }
+}
+
+export const getChainScan = (chainId: Number, txn:string) => {
+  if (chainId === 8453) {
+    console.log("scan is base", contractConfig[0].logo);
+    return String(base.blockExplorers.default.url + "/tx/" + txn);
+  }
+  if (chainId === 42161) {
+    console.log("scan is arbitrum", contractConfig[1].logo);
+    return String(arbitrum.blockExplorers.default.url + "/tx/" + txn);
+  }
+  if (chainId === 10) {
+    console.log("scan is optimism", contractConfig[2].logo);
+    return String(optimism.blockExplorers.default.url + "/tx/" + txn);
+  }
+}

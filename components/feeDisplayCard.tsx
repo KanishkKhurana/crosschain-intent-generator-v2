@@ -63,7 +63,7 @@ export default function FeeDisplayCard() {
 
         <Card className="bg-[#34353a] transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 shadow-mb">
             <CardHeader>
-                <CardTitle className='text-3xl'>Intent Details</CardTitle>
+                <CardTitle className='text-3xl '>Intent Details</CardTitle>
                 <CardDescription className='mb-5 w-4/5'>
                     Here are the details of your crosschain intent. It shows all the details of the intent and the fees associated with it.
                 </CardDescription>
@@ -97,7 +97,7 @@ export default function FeeDisplayCard() {
                                                 </div>
                                             </TooltipTrigger>
                                             <TooltipContent className='bg-muted text-muted-foreground'>
-                                                <p>This is the total fee for the intent.</p>
+                                                <p>Fees = InputAmount - ( destinationChainGasFee + LpFee + RelayerFee )</p>
                                             </TooltipContent>
                                         </Tooltip>
                                     </TooltipProvider>
@@ -108,8 +108,8 @@ export default function FeeDisplayCard() {
                         <div className='p-3 rounded-md bg-[#2d2f32] no-underline'>
                             <div className='border-none border-[#2d2f32]'>
                                 <div className='no-underline'>
-                                    <div className='no-underline'>
-                                        <Label className='no-underline text-lg'>Intent Breakdown</Label>
+                                    <div className='no-underline mb-2'>
+                                        <Label className='no-underline text-lg font-medium'>Intent Breakdown</Label>
                                     </div>
                                     <div className='border-none border-[#2d2f32]'>
                                         <div>

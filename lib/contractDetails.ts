@@ -3,19 +3,19 @@ export const contractConfig = [
         "name": "Base",
         "contractAddress": "0x514496264fa0B4Ee0522bC7Db644F78B02AEb1ae",
         "chainId": 8453,
-        "logo": "https://app.across.to/assets/base-79dee8a2.svg",
+        "logo": "/base.svg",
     },
     {
         "name": "Arbitrum",
         "contractAddress": "0xDE5cFBDE966bF8a187a332EC9c5081A2c8a537c5",
         "chainId": 42161,
-        "logo": "https://app.across.to/assets/arbitrum-ad865400.svg",
+        "logo": "/arbitrum.svg",
     },
     {
         "name": "Optimism",
         "contractAddress": "0x5cC9dde9Fdc4fE3A910006709bFa7A39155ef93f",
         "chainId": 10,
-        "logo": "https://app.across.to/assets/op-d3454edb.svg",
+        "logo": "/op.svg",
     },
 ]
 

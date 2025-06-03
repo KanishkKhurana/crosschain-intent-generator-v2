@@ -14,7 +14,7 @@ export const useSuggestedFees = (
   params: useSuggestedFeesParams,
   enabled = true
 ) => {
-  const { setOutputAmount, setAmountWithDecimals, inputTokenSymbol } = useIntentStore();
+  const { setOutputAmount, setAmountWithDecimals, inputTokenSymbol, setFillTime } = useIntentStore();
 
 
   // Convert amount to decimals
@@ -45,8 +45,9 @@ export const useSuggestedFees = (
     if (suggestedFees) {
       setOutputAmount(suggestedFees.outputAmount);
       setAmountWithDecimals(amountWithDecimalsBigInt);
+      setFillTime(suggestedFees.estimatedFillTimeSec);
     }
-  }, [suggestedFees, setOutputAmount, setAmountWithDecimals, amountWithDecimalsBigInt]);
+  }, [suggestedFees, setOutputAmount, setAmountWithDecimals, amountWithDecimalsBigInt, setFillTime]);
 
 
   return { suggestedFees };

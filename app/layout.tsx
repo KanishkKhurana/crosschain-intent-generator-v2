@@ -13,6 +13,9 @@ const barlow = Barlow({
 export const metadata: Metadata = {
   title: "Crosschain Intent Generator",
   description: "Generate crosschain intents and bridge funds instantly",
+  icons: {
+    icon: "/image.avif",
+  },
 };
 
 export default function RootLayout({

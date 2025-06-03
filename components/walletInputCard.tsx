@@ -94,7 +94,6 @@ export default function WalletInputCard() {
                   {contractConfig.filter(chain => chain.chainId !== useIntentStore().destinationChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
                       <div className='flex items-center gap-2'>
-                        <img src={chain.logo} alt={chain.name} className='w-4 h-4' />
                         {chain.name}
                       </div>
                     </option>
@@ -120,7 +119,6 @@ export default function WalletInputCard() {
                   {contractConfig.filter(chain => chain.chainId !== useIntentStore().originChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
                       <div className='flex items-center gap-2'>
-                        <img src={chain.logo} alt={chain.name} className='w-4 h-4' />
                         {chain.name}
                       </div>
                     </option>

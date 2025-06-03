@@ -10,7 +10,7 @@ import IntentResultCard from "@/components/IntentResultCard";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center px-5 bg-[#2d2e32]">
+    <div className="flex flex-col pb-6 items-center justify-center px-5 bg-[#2d2e32]">
       <h1 className="text-4xl font-semibold text-white my-6 text-center">
         Crosschain Intent Generator
 

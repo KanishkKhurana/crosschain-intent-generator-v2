@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useStepStore } from "../store/stepStore";
+import { getChainLogo, getChainScan } from "../utils";
+import { useIntentStore } from "../store/intentStore";
 
 export const useDepositStatus = (depositTxHash: string | undefined) => {
     const { step } = useStepStore();
@@ -16,7 +18,10 @@ export const useDepositStatus = (depositTxHash: string | undefined) => {
             if (response.status === 200) {
                 const data = await response.json();
                 if (data.status === "filled") {
+                    useStepStore.getState().setStep(4);
+                    useIntentStore.getState().setLoading(false);
                     return data;
+
                 }
             }
             // If not 200, throw error to trigger retry
@@ -29,15 +34,21 @@ export const useDepositStatus = (depositTxHash: string | undefined) => {
     });
 
     // console.log("depositStatus", depositStatus);
-  if (step === 3) {
-    useStepStore.getState().setStep(4);
-  }
 
+
+    const originChainImage = getChainLogo(depositStatus?.originChainId);
+    const destinationChainImage = getChainLogo(depositStatus?.destinationChainId);
+    const originChainScan = getChainScan(depositStatus?.originChainId, depositStatus?.depositTxHash);
+    const destinationChainScan = getChainScan(depositStatus?.destinationChainId, depositStatus?.depositTxHash);
 
     return {
         depositStatus,
         isError,
         isSuccess,
         refetch,
+        originChainImage,
+        destinationChainImage,
+        originChainScan,
+        destinationChainScan,
     };
 }
