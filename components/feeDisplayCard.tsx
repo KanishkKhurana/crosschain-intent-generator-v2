@@ -32,6 +32,7 @@ import { useIntentStore } from '@/lib/store'
 import { useWriteContract } from 'wagmi'
 import { AcrossOriginSettlementContractOpenAbi, getChain, getIntentContract, getTokenDecimals } from '@/lib/utils'
 import { getChainId } from 'viem/actions'
+import { useStepStore } from '@/lib/store/stepStore'
 
 
 
@@ -49,48 +50,17 @@ export default function FeeDisplayCard() {
         walletAddress: walletAddress,
     });
 
-
-
-    const callTxn = async () => {
-        const intentContract = getIntentContract(originChain);
-
-
-        // Create wallet client for sending transactions
-        const walletClient = createWalletClient({
-            account: walletAddress as `0x${string}`,
-            chain: getChain(originChain),
-            transport: custom(window.ethereum),
-        });
-
-        console.log("heree:", getChain(originChain).id);
-        await walletClient.switchChain({
-            id: getChain(originChain).id,
-        });
-
-
-
-        const tx = await walletClient.writeContract({
-            address: intentContract as `0x${string}`,
-            abi: AcrossOriginSettlementContractOpenAbi,
-            functionName: 'open',
-            args: [{
-                orderData: orderData,
-                fillDeadline: fillDeadline,
-                orderDataType: orderDataType,
-            }],
-        });
-    }
-
-
-
-
-
-
-
-
-
     return (
-        <Card className="border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem]">
+        <div className='flex h-full gap-2'>
+            <div className='flex flex-col w-full items-center basis-1/12 relative'>
+        <div className={`${useStepStore().step >= 2 ? ' bg-[#6cf9d8]' : ' bg-gray-500'} text-black transition-all relative z-10 duration-300 rounded-full w-10 h-10 flex items-center justify-center`}>
+          2
+        </div>
+        <div className={`w-full h-full flex flex-col border-l  absolute top-0 left-1/2 z-0 ${useStepStore().step >= 3 ? 'border-[#6cf9d8]' : 'border-gray-500'} transition-all duration-300`}>
+        </div>
+      </div>
+
+        <Card className="border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12">
             <CardHeader>
                 <CardTitle className='text-3xl'>Intent Details</CardTitle>
                 <CardDescription className='mb-5 w-4/5'>
@@ -188,5 +158,6 @@ export default function FeeDisplayCard() {
                 </>
             )}
         </Card>
+        </div>
     )
 }

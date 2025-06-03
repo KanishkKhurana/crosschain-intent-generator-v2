@@ -25,22 +25,22 @@ export const padAddress = (address: `0x${string}`) => {
 
 export const AcrossOriginSettlementContractOpenAbi = [
   {
-      type: 'function',
-      name: 'open',
-      stateMutability: 'nonpayable',
-      inputs: [
-          {
-              components: [
-                { internalType: "uint32", name: "fillDeadline", type: "uint32" },
-                { internalType: "bytes32", name: "orderDataType", type: "bytes32" },
-                { internalType: "bytes", name: "orderData", type: "bytes" },
-              ],
-              internalType: "struct OnchainCrossChainOrder",
-              name: "order",
-              type: "tuple",
-            },
-      ],
-      outputs: [],
+    type: 'function',
+    name: 'open',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        components: [
+          { internalType: "uint32", name: "fillDeadline", type: "uint32" },
+          { internalType: "bytes32", name: "orderDataType", type: "bytes32" },
+          { internalType: "bytes", name: "orderData", type: "bytes" },
+        ],
+        internalType: "struct OnchainCrossChainOrder",
+        name: "order",
+        type: "tuple",
+      },
+    ],
+    outputs: [],
   }
 ];
 

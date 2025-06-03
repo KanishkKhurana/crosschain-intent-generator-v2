@@ -8,6 +8,7 @@ import { mainnet, base, optimism, arbitrum } from "viem/chains";
 import { useWalletStore } from "../store/walletStore";
 import { useWriteContract } from "wagmi";
 import { useIntentStore } from "../store/intentStore";
+import { useStepStore } from "../store/stepStore";
 
 export const executeTransaction = async (transaction: any) => {
   const { originChain } = transaction;
@@ -25,7 +26,7 @@ export const executeTransaction = async (transaction: any) => {
   const walletClient = createWalletClient({
     account: transaction.walletAddress as `0x${string}`,
     chain: getChain(originChain),
-    transport: custom(window.ethereum),
+    transport: custom(window.ethereum!!),
   });
 
   console.log("here:", originChain);
@@ -34,7 +35,7 @@ export const executeTransaction = async (transaction: any) => {
   });
 
   console.log("fullfun");
-  transaction.setDepositTxHash("tx");
+  console.log("walletClient:", walletClient);
 
   // Simulate the contract call first
   try {
@@ -119,6 +120,8 @@ export const executeTransaction = async (transaction: any) => {
     ],
   });
   console.log("tx:", tx);
+  transaction.setDepositTxHash(tx);
+  useStepStore.getState().setStep(3);
 
   // Update the depositTxHash state
 };

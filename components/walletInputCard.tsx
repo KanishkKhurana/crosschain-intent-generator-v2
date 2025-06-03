@@ -19,6 +19,8 @@ import { Address } from 'viem'
 import { useAvailableRoutes } from "@/lib/hooks/useAvailableRoutes"
 import { useSuggestedFees } from '@/lib/hooks/useSuggestedFees'
 import { useIntentGeneration } from '@/lib/hooks/useIntentGeneration'
+import { useStepStore } from '@/lib/store/stepStore'
+
 
 
 export default function WalletInputCard() {
@@ -27,6 +29,7 @@ export default function WalletInputCard() {
   const { connectWallet } = useConnectWallet({
     onSuccess: ({ wallet }) => {
       setWalletAddress(wallet.address as `0x${string}`);
+      useStepStore.getState().setStep(2);
     },
   });
 
@@ -50,8 +53,15 @@ export default function WalletInputCard() {
 
 
   return (
-    <div>
-      <Card className="border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem]">
+    <div className='flex h-full gap-2'>
+      <div className='flex flex-col w-full items-center basis-1/12 relative'>
+        <div className={`${useStepStore().step >= 1 ? ' bg-[#6cf9d8]' : ' bg-gray-500'} text-black transition-all relative z-10 duration-300 rounded-full w-10 h-10 flex items-center justify-center`}>
+          1
+        </div>
+        <div className={`w-full h-full flex flex-col border-l  absolute top-0 left-1/2 z-0 ${useStepStore().step >= 2 ? 'border-[#6cf9d8]' : 'border-gray-500'} transition-all duration-300`}>
+        </div>
+      </div>
+      <Card className="border hover:border-gray-500 transition-all duration-300 w-full sm:w-96 md:w-[32rem] lg:w-[36rem] xl:w-[40rem] 2xl:w-[44rem] mb-12 basis-11/12">
         <CardHeader>
           <CardTitle className='text-3xl '>Configure Intent Parameters</CardTitle>
           <CardDescription className='mb-5 w-4/5'>Define the origin and destination chain, amount and connect your wallet to initiate a crosschain intent</CardDescription>
@@ -77,13 +87,16 @@ export default function WalletInputCard() {
                     const value = Number(e.target.value);
                     useIntentStore.getState().setOriginChain(value);
                     // If destination chain matches new origin, clear it
-                  
+
                   }}
                 >
                   <option value="" disabled>Select origin chain</option>
                   {contractConfig.filter(chain => chain.chainId !== useIntentStore().destinationChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
-                      {chain.name}
+                      <div className='flex items-center gap-2'>
+                        <img src={chain.logo} alt={chain.name} className='w-4 h-4' />
+                        {chain.name}
+                      </div>
                     </option>
                   ))
                   }
@@ -100,13 +113,16 @@ export default function WalletInputCard() {
                     const value = Number(e.target.value);
                     useIntentStore.getState().setDestinationChain(value);
                     // If origin chain matches new destination, clear it
- 
+
                   }}
                 >
                   <option value="" disabled>Select destination chain</option>
                   {contractConfig.filter(chain => chain.chainId !== useIntentStore().originChain).map((chain) => (
                     <option key={chain.chainId} value={chain.chainId}>
-                      {chain.name}
+                      <div className='flex items-center gap-2'>
+                        <img src={chain.logo} alt={chain.name} className='w-4 h-4' />
+                        {chain.name}
+                      </div>
                     </option>
                   ))
                   }
