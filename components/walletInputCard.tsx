@@ -36,19 +36,6 @@ export default function WalletInputCard() {
     destinationChainId: destinationChain ?? 10
   });
 
-  // console.log("inputToken:", inputToken);
-  // console.log("outputToken:", outputToken);
-  // console.log("inputTokenSymbol:", inputTokenSymbol);
-  // console.log("walletAddress:", walletAddress);
-  // console.log("originChain:", originChain);
-  // console.log("destinationChain:", destinationChain);
-  // console.log("amount:", amount);
-  // console.log("inputToken:", inputToken);
-  // console.log("outputToken:", outputToken);
-  // console.log("inputTokenSymbol:", inputTokenSymbol);
-  // console.log("routes:", routes);
-
-
 
   return (
     <div className='flex h-full gap-2'>
